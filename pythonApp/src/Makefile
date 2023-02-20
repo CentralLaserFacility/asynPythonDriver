@@ -16,11 +16,11 @@ DBD += asynPythonDriver.dbd
 asynPythonDriver_SRCS += asynPythonDriver.cpp
 
 # Get the version string of python
-PYTHON_VERSION = $(shell python -c 'from distutils import sysconfig; \
+PYTHON_VERSION = $(shell python3 -c 'from distutils import sysconfig; \
     print(sysconfig.get_config_var("VERSION"))')
 
-USR_INCLUDES = $(shell python-config --includes)
-USR_LDFALGS =  $(shell python-config --libs)
+USR_INCLUDES = $(shell python3-config --includes)
+USR_LDFALGS =  $(shell python3-config --libs)
 USR_SYS_LIBS += python$(PYTHON_VERSION)
 
 asynPythonDriver_LIBS += asyn

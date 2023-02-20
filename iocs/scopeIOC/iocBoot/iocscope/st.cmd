@@ -1,4 +1,4 @@
-#!../../bin/darwin-x86/python
+#!../../bin/linux-x86_64/scope
 
 ## You may have to change python to something else
 ## everywhere it appears in this file

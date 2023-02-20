@@ -1,5 +1,5 @@
 import re
-import cStringIO, tokenize
+import io
 
 def parse_ignore(next):
     while True:
@@ -16,7 +16,7 @@ def parse_field(next):
         return
 
     token = next()
-    if token[0] not in (tokenize.NAME, tokenize.STRING):
+    if token[0] not in (io.tokenize.NAME, io.tokenize.STRING):
         return
     field = token[1]
 
@@ -25,7 +25,7 @@ def parse_field(next):
         return
 
     token = next()
-    if token[0] != tokenize.STRING:
+    if token[0] != io.tokenize.STRING:
         return
     value = token[1]
     return field, value.strip('"')
@@ -36,7 +36,7 @@ def parse_rtyp(next):
         return
 
     token = next()
-    if token[0] != tokenize.NAME:
+    if token[0] != io.tokenize.NAME:
         return
     rtyp = token[1]
 
@@ -45,7 +45,7 @@ def parse_rtyp(next):
         return
 
     token = next()
-    if token[0] != tokenize.STRING:
+    if token[0] != io.tokenize.STRING:
         return
     name = token[1]
     return rtyp, name.strip('"')
@@ -86,8 +86,8 @@ def parse_database(source):
     :rtype: list of dicts
     """
 
-    src = cStringIO.StringIO(source).readline
-    src = tokenize.generate_tokens(src)
+    src = io.StringIO(source).readline
+    src = io.tokenize.generate_tokens(src)
 
     records = []
     while True:
@@ -95,7 +95,7 @@ def parse_database(source):
             token = src.next()
         except StopIteration:
             break
-        if token[0] is tokenize.COMMENT:
+        if token[0] is io.tokenize.COMMENT:
             continue
         if token[1] == 'record':
             records.append(parse_record(src.next))
